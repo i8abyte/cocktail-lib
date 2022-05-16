@@ -3,18 +3,25 @@ import axios from 'axios';
 
 const cocktailUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin';
 
+type Cocktail = {
+  strDrink: string,
+  strDrinkThumb: string,
+  idDrink: string
+}[];
+
 const App = () => {
-  // return <>Hello World</>;
-  const [userData, setUserData] = useState({});
+  const [drinks, setDrinks] = useState([] as Cocktail);
 
   useEffect(() => {
     getCocktailWithAxios();
   }, []);
 
   const getCocktailWithAxios = async () => {
-    const response = await axios.get(cocktailUrl);
-    setUserData(response.data);
+    const res = await axios.get(cocktailUrl);
+    setDrinks(res.data.drinks);
   };
+
+  if (!drinks) return <div>No cocktails</div>
 
   return (
     <div className="App">
@@ -22,7 +29,10 @@ const App = () => {
         <h2>Cocktail</h2>
       </header>
       <div className="cocktail-container">
-        {JSON.stringify(userData)}
+        {/* {JSON.stringify(drinks)} */}
+        {drinks.map((drink) => (
+          <div>{JSON.stringify(drink.strDrink)}</div>
+        ))}
       </div>
     </div>
   );
