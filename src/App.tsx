@@ -21,17 +21,22 @@ const App = () => {
     setDrinks(res.data.drinks);
   };
 
-  if (!drinks) return <div>No cocktails</div>
+  if (!drinks) return <div>No cocktails available for the provided spirit</div>
 
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Cocktail</h2>
+        <h1>Cocktails</h1>
+        <hr/>
       </header>
       <div className="cocktail-container">
         {/* {JSON.stringify(drinks)} */}
         {drinks.map((drink) => (
-          <div>{JSON.stringify(drink.strDrink)}</div>
+          <div className="cocktail">
+            <img src={drink.strDrinkThumb}/>
+            <a href={drink.strDrinkThumb}><h2>{drink.strDrink}</h2></a>
+            <hr/>
+          </div>
         ))}
       </div>
     </div>
